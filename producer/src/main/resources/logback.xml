@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOG_PATH" value="/tmp"/>
+
+	<appender name="STDOUT"
+			  class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="INFO_LOG"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/auth-service-app.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/archived/app.%i{yyyy-MM-dd_HH:mm:ss.SSS}.log</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>1</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ERROR_LOG"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/auth-service-err.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/archived/err.%i{yyyy-MM-dd_HH:mm:ss.SSS}.log</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>1</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="INFO_LOG"/>
+		<appender-ref ref="ERROR_LOG"/>
+	</root>
+</configuration>

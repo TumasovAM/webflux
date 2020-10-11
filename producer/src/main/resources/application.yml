@@ -4,8 +4,8 @@ server:
     enabled: true
 
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/webflux_tutorial
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/webflux_tutorial
     username: postgres
     password: postgres
     hikari:
